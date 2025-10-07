@@ -4,7 +4,6 @@ import io.github.cursodsousa.produtosapi.model.Produto;
 import io.github.cursodsousa.produtosapi.repository.ProdutoRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,7 +17,7 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public Produto salvar(@RequestBody Produto produto){
+    public Produto salvarProduto(@RequestBody Produto produto){
         var id = UUID.randomUUID().toString();
         produto.setId(id);
         produtoRepository.save(produto);
@@ -29,4 +28,10 @@ public class ProdutoController {
     public Produto obertPorId(@PathVariable("id") String id){
         return produtoRepository.findById(id).orElse(null);
     }
+
+    @DeleteMapping("{id}")
+    public void deletarProduto(@PathVariable("id") String id){
+        produtoRepository.deleteById(id);
+    }
 }
+
